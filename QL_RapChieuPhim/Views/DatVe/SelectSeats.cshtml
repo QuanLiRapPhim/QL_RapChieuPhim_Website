@@ -1,6 +1,7 @@
 ﻿@model QL_RapChieuPhim.Models.SuatChieu
 @{
     var seats = (IEnumerable<QL_RapChieuPhim.Models.Ghe>)ViewBag.Seats;
+    var customerId = Session["CustomerID"]; // Retrieve CustomerID from Session
     ViewBag.Title = "Chọn ghế";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
@@ -135,8 +136,9 @@
         bookButton.addEventListener('click', function () {
             const selectedSeats = selectedSeatsInput.value;
             if (selectedSeats) {
-                // Redirect to a booking action with selected seats
-                window.location.href = '@Url.Action("Confirmation", "DatVe")' + '?seatIds=' + selectedSeats;
+                // Redirect to a booking action with selected seats and customerId
+                const customerId = '@customerId';
+                window.location.href = '@Url.Action("BookTickets", "DatVe")' + '?showTimeId=' + @Model.MaSuatChieu + '&seatIds=' + selectedSeats + '&customerId=' + customerId;
             } else {
                 alert('Vui lòng chọn ít nhất một ghế trước khi đặt vé.');
             }

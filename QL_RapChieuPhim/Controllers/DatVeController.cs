@@ -58,11 +58,9 @@ namespace QL_RapChieuPhim.Controllers
             return View(showTime); // Trả về suất chiếu
         }
 
-
-
         // Đặt vé cho suất chiếu và ghế
-        [HttpPost]
-        public ActionResult BookTickets(int showTimeId, int[] seatIds, int customerId)
+        [HttpGet]
+        public ActionResult BookTickets(int showTimeId, int[] seatIds, int? customerId)
         {
             var showTime = data.SuatChieus.FirstOrDefault(sc => sc.MaSuatChieu == showTimeId);
             if (showTime == null || seatIds.Length == 0)
@@ -76,8 +74,7 @@ namespace QL_RapChieuPhim.Controllers
                 return new HttpStatusCodeResult(400, "Một số ghế đã được đặt trước.");
             }
 
-            var customer = data.KhachHangs.FirstOrDefault(kh => kh.MaKhachHang == customerId);
-            if (customer == null)
+            if (!customerId.HasValue || !data.KhachHangs.Any(kh => kh.MaKhachHang == customerId.Value))
             {
                 return new HttpStatusCodeResult(400, "Không tìm thấy khách hàng.");
             }
@@ -88,7 +85,7 @@ namespace QL_RapChieuPhim.Controllers
                 var ticket = new Ve
                 {
                     MaSuatChieu = showTimeId,
-                    MaKhachHang = customerId,
+                    MaKhachHang = customerId.Value,
                     MaGhe = seat.MaGhe,
                     SoGhe = seat.SoGhe,
                     Gia = 100000,
@@ -100,23 +97,26 @@ namespace QL_RapChieuPhim.Controllers
 
             data.SubmitChanges();
 
-            return RedirectToAction("Confirmation", new { customerId, showTimeId });
+            return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
         }
 
-        // Xác nhận đặt vé
-        public ActionResult Confirmation(int customerId, int showTimeId)
+        public ActionResult Confirmation(int? customerId, int showTimeId)
         {
+            if (!customerId.HasValue)
+            {
+                return new HttpStatusCodeResult(400, "Thông tin khách hàng không hợp lệ.");
+            }
+
             var tickets = data.Ves
-                .Where(v => v.MaKhachHang == customerId && v.MaSuatChieu == showTimeId)
+                .Where(v => v.MaKhachHang == customerId.Value && v.MaSuatChieu == showTimeId)
                 .ToList();
 
             foreach (var ticket in tickets)
             {
                 var seat = data.Ghes.FirstOrDefault(g => g.MaGhe == ticket.MaGhe);
-                if (seat != null)
-                {
-                    ticket.SoGhe = seat.SoGhe;
-                }
+                ticket.Ghe = seat;
+                ticket.SuatChieu = data.SuatChieus.FirstOrDefault(sc => sc.MaSuatChieu == ticket.MaSuatChieu);
+                ticket.KhachHang = data.KhachHangs.FirstOrDefault(kh => kh.MaKhachHang == ticket.MaKhachHang);
             }
 
             return View(tickets);

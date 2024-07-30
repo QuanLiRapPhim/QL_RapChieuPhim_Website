@@ -85,6 +85,7 @@ namespace QL_RapChieuPhim.Controllers
             KhachHang kh = data.KhachHangs.SingleOrDefault(n => n.Email == email && n.MatKhau == matkhau);
             if (kh != null)
             {
+                Session["CustomerID"] = kh.MaKhachHang;
                 Session["Email"] = kh.Email; // Lưu email vào Session
                 return RedirectToAction("Index", "Phims");
             }
