@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "DoiMatKhau";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/cssDoiMatKhau.css">
+
+<h2>Đổi mật khẩu</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <label for="MatKhauCu">Mật khẩu cũ</label>
+        <input type="password" id="MatKhauCu" name="MatKhauCu" />
+        @Html.ValidationMessage("MatKhauCu", null, new { @class = "validation-message" })
+        <div class="validation-message">@ViewData["Loi1"]</div>
+    </div>
+    <div>
+        <label for="MatKhauMoi">Mật khẩu mới</label>
+        <input type="password" id="MatKhauMoi" name="MatKhauMoi" />
+        @Html.ValidationMessage("MatKhauMoi", null, new { @class = "validation-message" })
+        <div class="validation-message">@ViewData["Loi2"]</div>
+    </div>
+    <div>
+        <label for="NhapLaiMatKhauMoi">Nhập lại mật khẩu mới</label>
+        <input type="password" id="NhapLaiMatKhauMoi" name="NhapLaiMatKhauMoi" />
+        @Html.ValidationMessage("NhapLaiMatKhauMoi", null, new { @class = "validation-message" })
+        <div class="validation-message">@ViewData["Loi3"]</div>
+    </div>
+    <div class="validation-message">
+        @ViewData["Loi4"]
+    </div>
+    <div>
+        <button type="submit">Đổi mật khẩu</button>
+    </div>
+}
+
+<div class="success-message">
+    @ViewBag.ThongBao
+</div>

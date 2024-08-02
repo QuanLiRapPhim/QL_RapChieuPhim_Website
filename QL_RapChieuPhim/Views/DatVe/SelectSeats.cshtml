@@ -6,89 +6,17 @@
     ViewBag.Title = "Chọn ghế";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
-<style>
-    .seats-list {
-        text-align: center;
-    }
-
-    .seat-row-container {
-        margin-bottom: 20px;
-    }
-
-    .seat-row {
-        display: flex;
-        justify-content: center; /* Canh giữa hàng ghế */
-        margin-bottom: 10px;
-    }
-
-    .seat-buttons {
-        display: flex;
-        gap: 5px;
-        flex-wrap: wrap;
-        justify-content: center; /* Canh giữa các nút ghế */
-    }
-
-    .seat-checkbox {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 80px; /* Tăng kích thước khung */
-        height: 60px; /* Tăng kích thước khung */
-        font-size: 12px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        text-align: center;
-        padding: 10px; /* Thêm khoảng trống xung quanh checkbox */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
-    }
-
-        .seat-checkbox.success {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .seat-checkbox.warning {
-            background-color: #ffc107;
-            color: black;
-        }
-
-        .seat-checkbox.disabled {
-            background-color: #6c757d;
-            color: white;
-            cursor: not-allowed;
-        }
-
-    .book-button-container {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    .book-button {
-        width: 100px;
-        height: 40px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-        .book-button:hover {
-            background-color: #0056b3;
-        }
-</style>
+<link rel="stylesheet" type="text/css" href="~/Content/css/cssSelectSeat.css">
 
 <div class="seats-list">
     <h5>Màn hình</h5>
     <h5>/--------------------------------------------------------------\</h5>
     <div class="seat-row-container">
-        @foreach (var row in seats.GroupBy(g => g.SoGhe.Substring(0, 1))) // Nhóm ghế theo hàng
+        @foreach (var row in seats.GroupBy(g => g.SoGhe.Substring(0, 1)))
         {
             <div class="seat-row">
                 <div class="seat-buttons">
-                    @foreach (var seat in row.OrderBy(s => s.SoGhe.Substring(1))) // Sắp xếp ghế theo số
+                    @foreach (var seat in row.OrderBy(s => s.SoGhe.Substring(1)))
                     {
                         var buttonClass = seat.TrangThai ? "disabled" : "success";
 

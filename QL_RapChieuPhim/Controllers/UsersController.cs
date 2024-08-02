@@ -102,6 +102,60 @@ namespace QL_RapChieuPhim.Controllers
             return RedirectToAction("Index", "Phims");
         }
 
+        [HttpGet]
+        public ActionResult DoiMatKhau()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult DoiMatKhau(FormCollection collection)
+        {
+            var email = Session["Email"]?.ToString();
+            var matkhaucu = collection["MatKhauCu"];
+            var matkhaumoi = collection["MatKhauMoi"];
+            var nhaplaimatkhaumoi = collection["NhapLaiMatKhauMoi"];
+
+            if (String.IsNullOrEmpty(matkhaucu))
+            {
+                ViewData["Loi1"] = "Mật khẩu cũ không được để trống";
+            }
+            else if (String.IsNullOrEmpty(matkhaumoi))
+            {
+                ViewData["Loi2"] = "Mật khẩu mới không được để trống";
+            }
+            else if (String.IsNullOrEmpty(nhaplaimatkhaumoi))
+            {
+                ViewData["Loi3"] = "Nhập lại mật khẩu mới không được để trống";
+            }
+            else if (matkhaumoi != nhaplaimatkhaumoi)
+            {
+                ViewData["Loi4"] = "Mật khẩu mới và Nhập lại mật khẩu mới không khớp";
+            }
+            else
+            {
+                try
+                {
+                    KhachHang kh = data.KhachHangs.SingleOrDefault(n => n.Email == email && n.MatKhau == matkhaucu);
+                    if (kh != null)
+                    {
+                        kh.MatKhau = matkhaumoi;
+                        data.SubmitChanges();
+                        ViewBag.ThongBao = "Đổi mật khẩu thành công";
+                    }
+                    else
+                    {
+                        ViewData["Loi5"] = "Mật khẩu cũ không đúng";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Ghi nhật ký lỗi
+                    System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+                    ViewBag.ThongBao = "Có lỗi xảy ra trong quá trình đổi mật khẩu. Vui lòng thử lại.";
+                }
+            }
+            return View();
+        }
     }
 }

@@ -37,6 +37,12 @@ namespace QL_RapChieuPhim.Controllers
         // Chọn ghế cho suất chiếu
         public ActionResult SelectSeats(int id)
         {
+            // Kiểm tra nếu người dùng chưa đăng nhập
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("DangNhap", "Users");
+            }
+
             var showTime = data.SuatChieus.FirstOrDefault(sc => sc.MaSuatChieu == id);
 
             if (showTime == null)
@@ -59,8 +65,16 @@ namespace QL_RapChieuPhim.Controllers
 
         // Đặt vé cho suất chiếu và ghế
         [HttpPost]
-        public ActionResult BookTickets(int showTimeId, int[] seatIds, int? customerId)
+        public ActionResult BookTickets(int showTimeId, int[] seatIds)
         {
+            // Kiểm tra nếu người dùng chưa đăng nhập
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("DangNhap", "Users");
+            }
+
+            var customerId = (int)Session["UserId"]; // Lấy mã khách hàng từ session
+
             if (seatIds == null || seatIds.Length == 0)
             {
                 return new HttpStatusCodeResult(400, "Chưa chọn ghế.");
@@ -72,16 +86,13 @@ namespace QL_RapChieuPhim.Controllers
                 return new HttpStatusCodeResult(400, "Suất chiếu không tồn tại.");
             }
 
-            // Log số lượng ghế được chọn
-            System.Diagnostics.Debug.WriteLine($"Number of selected seats: {seatIds.Length}");
-
             var seats = data.Ghes.Where(g => seatIds.Contains(g.MaGhe) && g.TrangThai == false).ToList();
             if (seats.Count != seatIds.Length)
             {
                 return new HttpStatusCodeResult(400, "Một số ghế đã được đặt trước.");
             }
 
-            if (!customerId.HasValue || !data.KhachHangs.Any(kh => kh.MaKhachHang == customerId.Value))
+            if (!data.KhachHangs.Any(kh => kh.MaKhachHang == customerId))
             {
                 return new HttpStatusCodeResult(400, "Không tìm thấy khách hàng.");
             }
@@ -92,7 +103,7 @@ namespace QL_RapChieuPhim.Controllers
                 var ticket = new Ve
                 {
                     MaSuatChieu = showTimeId,
-                    MaKhachHang = customerId.Value,
+                    MaKhachHang = customerId,
                     MaGhe = seat.MaGhe,
                     SoGhe = seat.SoGhe,
                     Gia = showTime.Gia, // Đảm bảo giá từ SuatChieu được sử dụng
@@ -113,8 +124,6 @@ namespace QL_RapChieuPhim.Controllers
             }
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
         }
-
-
 
         public ActionResult Confirmation(int? customerId, int showTimeId)
         {
@@ -137,8 +146,5 @@ namespace QL_RapChieuPhim.Controllers
 
             return View(tickets);
         }
-        
-
-
     }
 }

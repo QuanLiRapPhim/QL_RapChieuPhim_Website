@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="~/Content/css/cssDangNhap.css">
+
 <form action="/Users/DangNhap" method="post">
     <div class="imgcontainer">
         <img style="height: 190px; width: 190px" src="~/Images/dangnhap.jpg" alt="Avatar" class="avatar">
@@ -19,9 +20,11 @@
 
     <p style="color: red">@ViewBag.ThongBao</p>
     <div class="button-container">
-        <a href="/Phims" class="cancel-link">
-            <button type="button" class="cancelbtn">Cancel</button>
+        <!-- Nút Quên mật khẩu -->
+        <a href="/Users/DoiMatKhau" class="forgot-password-link">
+            <button type="button" class="forgot-password-button button-width">Quên mật khẩu?</button>
         </a>
-        <button type="submit" name="Đăng Nhập">Đăng nhập</button>
+        <!-- Nút Đăng nhập -->
+        <button type="submit" name="Đăng Nhập" class="login-button button-width">Đăng nhập</button>
     </div>
 </form>

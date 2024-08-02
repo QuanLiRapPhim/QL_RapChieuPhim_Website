@@ -114,6 +114,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\cssDangKy.css" />
     <Content Include="Content\css\cssDangNhap.css" />
+    <Content Include="Content\css\cssDoiMatKhau.css" />
+    <Content Include="Content\css\cssSelectSeat.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\dangky.jpg" />
@@ -207,7 +209,7 @@
     <Content Include="Views\DatVe\SelectSeats.cshtml" />
     <Content Include="Views\DatVe\ShowTimes.cshtml" />
     <Content Include="Views\DatVe\Confirmation.cshtml" />
-    <Content Include="Views\DatVe\_SeatsList.cshtml" />
+    <Content Include="Views\Users\DoiMatKhau.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
