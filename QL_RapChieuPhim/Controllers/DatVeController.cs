@@ -51,7 +51,6 @@ namespace QL_RapChieuPhim.Controllers
             {
                 seats = data.Ghes.Where(g => g.MaManHinh == manHinhId.Value).ToList();
             }
-
             ViewBag.Seats = seats; // Truyền danh sách ghế qua ViewBag
             ViewBag.ShowTimeId = id; // Truyền ID suất chiếu qua ViewBag
 
@@ -72,6 +71,9 @@ namespace QL_RapChieuPhim.Controllers
             {
                 return new HttpStatusCodeResult(400, "Suất chiếu không tồn tại.");
             }
+
+            // Log số lượng ghế được chọn
+            System.Diagnostics.Debug.WriteLine($"Number of selected seats: {seatIds.Length}");
 
             var seats = data.Ghes.Where(g => seatIds.Contains(g.MaGhe) && g.TrangThai == false).ToList();
             if (seats.Count != seatIds.Length)
@@ -109,9 +111,9 @@ namespace QL_RapChieuPhim.Controllers
                 // Log lỗi hoặc thông báo lỗi
                 return new HttpStatusCodeResult(500, "Lỗi khi đặt vé.");
             }
-
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
         }
+
 
 
         public ActionResult Confirmation(int? customerId, int showTimeId)
@@ -135,5 +137,8 @@ namespace QL_RapChieuPhim.Controllers
 
             return View(tickets);
         }
+        
+
+
     }
 }
