@@ -1,7 +1,6 @@
 ﻿using QL_RapChieuPhim.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,18 +53,24 @@ namespace QL_RapChieuPhim.Controllers
             }
 
             ViewBag.Seats = seats; // Truyền danh sách ghế qua ViewBag
+            ViewBag.ShowTimeId = id; // Truyền ID suất chiếu qua ViewBag
 
             return View(showTime); // Trả về suất chiếu
         }
 
         // Đặt vé cho suất chiếu và ghế
-        [HttpGet]
+        [HttpPost]
         public ActionResult BookTickets(int showTimeId, int[] seatIds, int? customerId)
         {
-            var showTime = data.SuatChieus.FirstOrDefault(sc => sc.MaSuatChieu == showTimeId);
-            if (showTime == null || seatIds.Length == 0)
+            if (seatIds == null || seatIds.Length == 0)
             {
-                return new HttpStatusCodeResult(400);
+                return new HttpStatusCodeResult(400, "Chưa chọn ghế.");
+            }
+
+            var showTime = data.SuatChieus.FirstOrDefault(sc => sc.MaSuatChieu == showTimeId);
+            if (showTime == null)
+            {
+                return new HttpStatusCodeResult(400, "Suất chiếu không tồn tại.");
             }
 
             var seats = data.Ghes.Where(g => seatIds.Contains(g.MaGhe) && g.TrangThai == false).ToList();
@@ -88,17 +93,26 @@ namespace QL_RapChieuPhim.Controllers
                     MaKhachHang = customerId.Value,
                     MaGhe = seat.MaGhe,
                     SoGhe = seat.SoGhe,
-                    Gia = 100000,
+                    Gia = showTime.Gia, // Đảm bảo giá từ SuatChieu được sử dụng
                     NgayDatVe = DateTime.Now
                 };
 
                 data.Ves.InsertOnSubmit(ticket);
             }
 
-            data.SubmitChanges();
+            try
+            {
+                data.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi hoặc thông báo lỗi
+                return new HttpStatusCodeResult(500, "Lỗi khi đặt vé.");
+            }
 
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
         }
+
 
         public ActionResult Confirmation(int? customerId, int showTimeId)
         {

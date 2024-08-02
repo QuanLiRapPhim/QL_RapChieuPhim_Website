@@ -3551,6 +3551,8 @@ namespace QL_RapChieuPhim.Models
 		
 		private System.Nullable<int> _SoGheTrong;
 		
+		private System.Nullable<decimal> _Gia;
+		
 		private EntitySet<Ve> _Ves;
 		
 		private EntityRef<ManHinhChieu> _ManHinhChieu;
@@ -3571,6 +3573,8 @@ namespace QL_RapChieuPhim.Models
     partial void OnThoiGianChieuChanged();
     partial void OnSoGheTrongChanging(System.Nullable<int> value);
     partial void OnSoGheTrongChanged();
+    partial void OnGiaChanging(System.Nullable<decimal> value);
+    partial void OnGiaChanged();
     #endregion
 		
 		public SuatChieu()
@@ -3685,6 +3689,26 @@ namespace QL_RapChieuPhim.Models
 					this._SoGheTrong = value;
 					this.SendPropertyChanged("SoGheTrong");
 					this.OnSoGheTrongChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gia", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> Gia
+		{
+			get
+			{
+				return this._Gia;
+			}
+			set
+			{
+				if ((this._Gia != value))
+				{
+					this.OnGiaChanging(value);
+					this.SendPropertyChanging();
+					this._Gia = value;
+					this.SendPropertyChanged("Gia");
+					this.OnGiaChanged();
 				}
 			}
 		}

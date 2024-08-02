@@ -13,6 +13,7 @@
             <th>Thời gian chiếu</th>
             <th>Màn hình chiếu</th>
             <th>Số ghế</th>
+            <th>Giá vé</th>
             <th></th>
         </tr>
     </thead>
@@ -31,6 +32,7 @@
 
                 <td>@(showTime.ManHinhChieu != null ? showTime.ManHinhChieu.SoManHinh.ToString() : "N/A")</td>
                 <td>@showTime.SoGheTrong</td> <!-- Hiển thị số ghế ở đây -->
+                <td>@showTime.Gia VNĐ</td>
                 <td>
                     @Html.ActionLink("Chọn ghế", "SelectSeats", new { id = showTime.MaSuatChieu }, new { @class = "btn btn-primary" })
                 </td>

@@ -1,6 +1,7 @@
 ﻿@model QL_RapChieuPhim.Models.SuatChieu
 @{
     var seats = (IEnumerable<QL_RapChieuPhim.Models.Ghe>)ViewBag.Seats;
+    var showTimeId = ViewBag.ShowTimeId;
     var customerId = Session["CustomerID"]; // Retrieve CustomerID from Session
     ViewBag.Title = "Chọn ghế";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
@@ -118,30 +119,59 @@
                     this.classList.remove('btn-warning');
                     this.classList.add('btn-success');
                     this.textContent = `Ghế ${seatNumber}`;
-                    this.removeAttribute('data-selected');
                 } else {
                     this.classList.remove('btn-success');
                     this.classList.add('btn-warning');
-                    this.textContent = `Đã chọn ${seatNumber}`;
-                    this.setAttribute('data-selected', 'true');
+                    this.textContent = `Ghế ${seatNumber} (Đã chọn)`;
                 }
 
-                // Update hidden input
-                const selectedSeats = Array.from(document.querySelectorAll('.seat-buttons button[data-selected]'))
-                    .map(button => button.getAttribute('data-seat-id'));
-                selectedSeatsInput.value = selectedSeats.join(',');
+                updateSelectedSeats();
             });
         });
 
+        function updateSelectedSeats() {
+            const selectedSeatIds = Array.from(buttons)
+                .filter(button => button.classList.contains('btn-warning'))
+                .map(button => button.getAttribute('data-seat-id'));
+
+            selectedSeatsInput.value = selectedSeatIds.join(',');
+        }
+
         bookButton.addEventListener('click', function () {
             const selectedSeats = selectedSeatsInput.value;
-            if (selectedSeats) {
-                // Redirect to a booking action with selected seats and customerId
-                const customerId = '@customerId';
-                window.location.href = '@Url.Action("BookTickets", "DatVe")' + '?showTimeId=' + @Model.MaSuatChieu + '&seatIds=' + selectedSeats + '&customerId=' + customerId;
-            } else {
-                alert('Vui lòng chọn ít nhất một ghế trước khi đặt vé.');
+            if (!selectedSeats) {
+                alert('Chưa chọn ghế.');
+                return;
             }
+
+            const customerId = '@Session["CustomerID"]';
+            if (!customerId) {
+                alert('Thông tin khách hàng không hợp lệ.');
+                return;
+            }
+            const url = '@Url.Action("BookTickets", "DatVe")';
+            const data = {
+                showTimeId: '@ViewBag.ShowTimeId',
+                seatIds: selectedSeats.split(','),
+                customerId: customerId
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(data).toString()
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '@Url.Action("Confirmation", "DatVe")?customerId=' + customerId + '&showTimeId=' + '@ViewBag.ShowTimeId';
+                } else {
+                    response.text().then(text => alert(text));
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
         });
     });
 </script>

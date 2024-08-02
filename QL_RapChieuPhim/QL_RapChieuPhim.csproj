@@ -158,6 +158,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_RapChieuPhim.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\SuatChieu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

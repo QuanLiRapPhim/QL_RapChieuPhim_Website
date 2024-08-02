@@ -15,10 +15,10 @@ CREATE TABLE Phim (
     ThoiLuong INT,
     TomTat NVARCHAR(255),
     NgayKhoiChieu DATE,
-	HinhAnh VARCHAR(255)
+	HinhAnh VARCHAR(255),
+	GiaVe DECIMAL(10, 2)
 	FOREIGN KEY (MaTheLoai) REFERENCES TheLoai(MaTheLoai)
 );
-
 -- Bảng RapChieuPhim
 CREATE TABLE RapChieuPhim (
     MaRap INT PRIMARY KEY IDENTITY(1,1),
@@ -43,6 +43,7 @@ CREATE TABLE SuatChieu (
     MaManHinh INT,
     ThoiGianChieu DATETIME,
     SoGheTrong INT,
+	Gia DECIMAL(10, 2),
     FOREIGN KEY (MaPhim) REFERENCES Phim(MaPhim),
     FOREIGN KEY (MaManHinh) REFERENCES ManHinhChieu(MaManHinh)
 );
@@ -204,24 +205,29 @@ VALUES
     (N'Lãng mạn');
 -- INSERT dữ liệu vào bảng Phim
 SET DATEFORMAT DMY
-INSERT INTO Phim (TenPhim, MaTheLoai, DaoDien, ThoiLuong, TomTat, NgayKhoiChieu, HinhAnh)
+INSERT INTO Phim (TenPhim, MaTheLoai, DaoDien, ThoiLuong, TomTat, NgayKhoiChieu, HinhAnh, GiaVe)
 VALUES 
-    (N'Despicable me 4', 1, N'Chris Renaud', 162, N'Gru phải đối mặt với kẻ thù mới là Maxime Le Mal và Valentina đang lên kế hoạch trả thù anh, buộc gia đình anh phải lẩn trốn đi nơi khác.', '2024-07-05', 'minion4.jpg'),
-    (N'Inception', 2, N'Christopher Nolan', 148, N'Một tên trộm bước vào giấc mơ của người khác để đánh cắp bí mật.', '2010-07-16', 'inception.jpg'),
-    (N'Avengers: Endgame', 2, N'Anthony Russo, Joe Russo', 181, N'Sau các sự kiện tàn khốc của Avengers: Infinity War, các Avengers tập hợp một lần nữa để đảo ngược hành động của Thanos và khôi phục lại sự cân bằng cho vũ trụ.', '2019-04-26', 'endgame.jpg'),
-    (N'Interstellar', 8, N'Christopher Nolan', 169, N'Một nhóm nhà thám hiểm du hành qua lỗ sâu trong không gian nhằm đảm bảo sự sống còn của nhân loại.', '2014-11-07', 'interstellar.jpg'),
-    (N'Joker', 8, N'Todd Phillips', 122, N'Tại thành phố Gotham, diễn viên hài bị bệnh tâm thần Arthur Fleck bị xã hội coi thường và ngược đãi. Sau đó anh ta rơi vào con đường sa ngã và trở thành biểu tượng Joker.', '2019-10-04', 'joker.jpg'),
-    (N'Parasite', 5, N'Bong Joon-ho', 132, N'Gia đình Kim sống trong cảnh nghèo khó, lên kế hoạch xâm nhập vào gia đình Park giàu có bằng cách từng người một vào làm việc tại nhà họ.', '2019-10-11', 'parasite.jpg'),
-    (N'The Matrix', 2, N'Lana Wachowski, Lilly Wachowski', 136, N'Một hacker máy tính học từ những kẻ nổi loạn bí ẩn về bản chất thực sự của thực tại và vai trò của anh ta trong cuộc chiến chống lại những người điều khiển nó.', '1999-03-31', 'matrix.jpg'),
-    (N'Fight Club', 3, N'David Fincher', 139, N'Một nhân viên văn phòng mất ngủ và một người bán xà phòng xây dựng một tổ chức toàn cầu để giúp giải phóng cơn tức giận của nam giới.', '1999-10-15', 'fightclub.jpg'),
-    (N'Pulp Fiction', 3, N'Quentin Tarantino', 154, N'Cuộc sống của hai tên sát thủ mafia, một võ sĩ quyền anh, vợ của một tên gangster và một cặp đôi cướp tiệm ăn đan xen trong bốn câu chuyện về bạo lực và sự chuộc tội.', '1994-10-14', 'pulpfiction.jpg'),
-    (N'The Shawshank Redemption', 3, N'Frank Darabont', 142, N'Hai người đàn ông bị giam cầm cùng nhau tạo dựng một mối quan hệ thân thiết qua nhiều năm, tìm thấy sự an ủi và chuộc lỗi thông qua những hành động tử tế thường nhật.', '1994-09-23', 'shawshank.jpg'),
-    (N'Gladiator', 2, N'Ridley Scott', 155, N'Một cựu tướng quân La Mã tìm cách trả thù hoàng đế tham nhũng đã giết gia đình anh ta và đày anh ta vào chế độ nô lệ.', '2000-05-05', 'gladiator.jpg'),
-	(N'The Godfather', 3, N'Francis Ford Coppola', 175, N'Bộ phim xoay quanh gia đình tội phạm Corleone ở New York, tập trung vào sự kế thừa quyền lực từ Vito Corleone sang con trai của ông, Michael.', '1972-03-24', 'godfather.jpg'),
-    (N'The Dark Knight', 2, N'Christopher Nolan', 152, N'Batman phải đối mặt với Joker, một kẻ thù mới đầy nguy hiểm, đe dọa đến thành phố Gotham.', '2008-07-18', 'darkknight.jpg'),
-    (N'Schindlers List', 3, N'Steven Spielberg', 195, N'Câu chuyện về Oskar Schindler, người đã cứu hàng ngàn người Do Thái khỏi cái chết trong Thế chiến II.', '1993-12-15', 'schindlerslist.jpg'),
-    (N'Titanic', 7, N'James Cameron', 195, N'Câu chuyện tình lãng mạn giữa Jack và Rose trên con tàu Titanic định mệnh.', '1997-12-19', 'titanic.jpg'),
-    (N'Forrest Gump', 9, N'Robert Zemeckis', 142, N'Cuộc đời đầy phi thường của Forrest Gump, người có trí tuệ hạn chế nhưng đã trải qua nhiều sự kiện lịch sử quan trọng.', '1994-07-06', 'forrestgump.jpg');
+    (N'Despicable me 4', 1, N'Chris Renaud', 162, N'Gru phải đối mặt với kẻ thù mới là Maxime Le Mal và Valentina đang lên kế hoạch trả thù anh, buộc gia đình anh phải lẩn trốn đi nơi khác.', '2024-07-05', 'minion4.jpg', 120000),
+    (N'Inception', 2, N'Christopher Nolan', 148, N'Một tên trộm bước vào giấc mơ của người khác để đánh cắp bí mật.', '2010-07-16', 'inception.jpg', 150000),
+    (N'Avengers: Endgame', 2, N'Anthony Russo, Joe Russo', 181, N'Sau các sự kiện tàn khốc của Avengers: Infinity War, các Avengers tập hợp một lần nữa để đảo ngược hành động của Thanos và khôi phục lại sự cân bằng cho vũ trụ.', '2019-04-26', 'endgame.jpg', 180000),
+    (N'Interstellar', 8, N'Christopher Nolan', 169, N'Một nhóm nhà thám hiểm du hành qua lỗ sâu trong không gian nhằm đảm bảo sự sống còn của nhân loại.', '2014-11-07', 'interstellar.jpg', 160000),
+    (N'Joker', 8, N'Todd Phillips', 122, N'Tại thành phố Gotham, diễn viên hài bị bệnh tâm thần Arthur Fleck bị xã hội coi thường và ngược đãi. Sau đó anh ta rơi vào con đường sa ngã và trở thành biểu tượng Joker.', '2019-10-04', 'joker.jpg', 130000),
+    (N'Parasite', 5, N'Bong Joon-ho', 132, N'Gia đình Kim sống trong cảnh nghèo khó, lên kế hoạch xâm nhập vào gia đình Park giàu có bằng cách từng người một vào làm việc tại nhà họ.', '2019-10-11', 'parasite.jpg', 140000),
+    (N'The Matrix', 2, N'Lana Wachowski, Lilly Wachowski', 136, N'Một hacker máy tính học từ những kẻ nổi loạn bí ẩn về bản chất thực sự của thực tại và vai trò của anh ta trong cuộc chiến chống lại những người điều khiển nó.', '1999-03-31', 'matrix.jpg', 145000),
+    (N'Fight Club', 3, N'David Fincher', 139, N'Một nhân viên văn phòng mất ngủ và một người bán xà phòng xây dựng một tổ chức toàn cầu để giúp giải phóng cơn tức giận của nam giới.', '1999-10-15', 'fightclub.jpg', 125000),
+    (N'Pulp Fiction', 3, N'Quentin Tarantino', 154, N'Cuộc sống của hai tên sát thủ mafia, một võ sĩ quyền anh, vợ của một tên gangster và một cặp đôi cướp tiệm ăn đan xen trong bốn câu chuyện về bạo lực và sự chuộc tội.', '1994-10-14', 'pulpfiction.jpg', 135000),
+    (N'The Shawshank Redemption', 3, N'Frank Darabont', 142, N'Hai người đàn ông bị giam cầm cùng nhau tạo dựng một mối quan hệ thân thiết qua nhiều năm, tìm thấy sự an ủi và chuộc lỗi thông qua những hành động tử tế thường nhật.', '1994-09-23', 'shawshank.jpg', 155000),
+    (N'Gladiator', 2, N'Ridley Scott', 155, N'Một cựu tướng quân La Mã tìm cách trả thù hoàng đế tham nhũng đã giết gia đình anh ta và đày anh ta vào chế độ nô lệ.', '2000-05-05', 'gladiator.jpg', 160000),
+    (N'The Godfather', 3, N'Francis Ford Coppola', 175, N'Bộ phim xoay quanh gia đình tội phạm Corleone ở New York, tập trung vào sự kế thừa quyền lực từ Vito Corleone sang con trai của ông, Michael.', '1972-03-24', 'godfather.jpg', 170000),
+    (N'The Dark Knight', 2, N'Christopher Nolan', 152, N'Batman phải đối mặt với Joker, một kẻ thù mới đầy nguy hiểm, đe dọa đến thành phố Gotham.', '2008-07-18', 'darkknight.jpg', 150000),
+    (N'Schindlers List', 3, N'Steven Spielberg', 195, N'Câu chuyện về Oskar Schindler, người đã cứu hàng ngàn người Do Thái khỏi cái chết trong Thế chiến II.', '1993-12-15', 'schindlerslist.jpg', 175000),
+    (N'Titanic', 7, N'James Cameron', 195, N'Câu chuyện tình lãng mạn giữa Jack và Rose trên con tàu Titanic định mệnh.', '1997-12-19', 'titanic.jpg', 140000),
+    (N'Forrest Gump', 9, N'Robert Zemeckis', 142, N'Cuộc đời đầy phi thường của Forrest Gump, người có trí tuệ hạn chế nhưng đã trải qua nhiều sự kiện lịch sử quan trọng.', '1994-07-06', 'forrestgump.jpg', 150000);
+	
+	ALTER TABLE Phim
+DROP COLUMN GiaVe;
+
+
 -- INSERT dữ liệu vào bảng RapChieuPhim
 INSERT INTO RapChieuPhim (TenRap, ViTri, TongGhe)
 VALUES 
@@ -242,13 +248,15 @@ VALUES
 
 	select * from SuatChieu
 -- INSERT dữ liệu vào bảng SuatChieu
-INSERT INTO SuatChieu (MaPhim, MaManHinh, ThoiGianChieu, SoGheTrong)
+INSERT INTO SuatChieu (MaPhim, MaManHinh, ThoiGianChieu, SoGheTrong, Gia)
 VALUES 
-    (10, 1, '2024-07-05 14:00:00', 150),
-    (12, 2, '2024-07-05 16:00:00', 200),
-    (3, 3, '2024-07-05 18:00:00', 180),
-    (4, 4, '2024-07-05 20:00:00', 220),
-    (5, 5, '2024-07-05 22:00:00', 170);
+    (10, 1, '2024-07-05 14:00:00', 150, 100000),
+    (12, 2, '2024-07-05 16:00:00', 200, 120000),
+    (3, 3, '2024-07-05 18:00:00', 180, 150000),
+    (4, 4, '2024-07-05 20:00:00', 220, 200000),
+    (5, 5, '2024-07-05 22:00:00', 170, 170000);
+
+
 
 -- INSERT dữ liệu vào bảng KhachHang
 INSERT INTO KhachHang (TenKhachHang, Email, SoDienThoai, DiaChi,MatKhau)
@@ -276,8 +284,14 @@ VALUES
     (3, 'B1'), (3, 'B2'), (3, 'B3'), (3, 'B4'), (3, 'B5'),
     (3, 'C1'), (3, 'C2'), (3, 'C3'), (3, 'C4'), (3, 'C5'),
     (3, 'D1'), (3, 'D2'), (3, 'D3'), (3, 'D4'), (3, 'D5'),
-    (3, 'E1'), (3, 'E2'), (3, 'E3'), (3, 'E4'), (3, 'E5');
-
+    (3, 'E1'), (3, 'E2'), (3, 'E3'), (3, 'E4'), (3, 'E5'),
+	(4, 'A1'), (4, 'A2'), (4, 'A3'), (4, 'A4'), (4, 'A5'),
+    (4, 'B1'), (4, 'B2'), (4, 'B3'), (4, 'B4'), (4, 'B5'),
+    (4, 'C1'), (4, 'C2'), (4, 'C3'), (4, 'C4'), (4, 'C5'),
+    (4, 'D1'), (4, 'D2'), (4, 'D3'), (4, 'D4'), (4, 'D5'),
+    (4, 'E1'), (4, 'E2'), (4, 'E3'), (4, 'E4'), (4, 'E5');
+	
+    
 -- INSERT dữ liệu vào bảng Vé
 INSERT INTO Ve (MaSuatChieu, MaKhachHang, MaGhe, Gia, NgayDatVe)
 VALUES 
