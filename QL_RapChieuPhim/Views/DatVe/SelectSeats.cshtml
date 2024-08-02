@@ -8,11 +8,17 @@
 }
 
 <style>
+    .seats-list {
+        text-align: center;
+    }
+
     .seat-row-container {
         margin-bottom: 20px;
     }
 
     .seat-row {
+        display: flex;
+        justify-content: center; /* Canh giữa hàng ghế */
         margin-bottom: 10px;
     }
 
@@ -20,10 +26,14 @@
         display: flex;
         gap: 5px;
         flex-wrap: wrap;
+        justify-content: center; /* Canh giữa các nút ghế */
     }
 
     .seat-checkbox {
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         width: 80px; /* Tăng kích thước khung */
         height: 60px; /* Tăng kích thước khung */
         font-size: 12px;
@@ -33,18 +43,6 @@
         padding: 10px; /* Thêm khoảng trống xung quanh checkbox */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
     }
-
-        .seat-checkbox input[type="checkbox"] {
-            display: block;
-            margin: 0 auto 10px; /* Canh giữa và thêm khoảng trống bên dưới */
-        }
-
-        .seat-checkbox span {
-            display: block;
-            width: 100%;
-            height: 100%;
-            line-height: 1.2;
-        }
 
         .seat-checkbox.success {
             background-color: #28a745;
@@ -83,14 +81,12 @@
 </style>
 
 <div class="seats-list">
-    <h4>Danh sách ghế</h4>
     <h5>Màn hình</h5>
     <h5>/--------------------------------------------------------------\</h5>
     <div class="seat-row-container">
         @foreach (var row in seats.GroupBy(g => g.SoGhe.Substring(0, 1))) // Nhóm ghế theo hàng
         {
             <div class="seat-row">
-
                 <div class="seat-buttons">
                     @foreach (var seat in row.OrderBy(s => s.SoGhe.Substring(1))) // Sắp xếp ghế theo số
                     {
