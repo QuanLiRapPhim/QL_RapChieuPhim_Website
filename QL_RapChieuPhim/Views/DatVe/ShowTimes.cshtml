@@ -31,7 +31,7 @@
                 }
 
                 <td>@(showTime.ManHinhChieu != null ? showTime.ManHinhChieu.SoManHinh.ToString() : "N/A")</td>
-                <td>@showTime.SoGheTrong</td> <!-- Hiển thị số ghế ở đây -->
+                <td>@showTime.SoGheTrong</td>
                 <td>@showTime.Gia VNĐ</td>
                 <td>
                     @Html.ActionLink("Chọn ghế", "SelectSeats", new { id = showTime.MaSuatChieu }, new { @class = "btn btn-primary" })
