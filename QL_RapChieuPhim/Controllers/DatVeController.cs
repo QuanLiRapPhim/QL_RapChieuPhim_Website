@@ -38,7 +38,7 @@ namespace QL_RapChieuPhim.Controllers
         public ActionResult SelectSeats(int id)
         {
             // Kiểm tra nếu người dùng chưa đăng nhập
-            if (Session["UserId"] == null)
+            if (Session["MaKhachHang"] == null)
             {
                 return RedirectToAction("DangNhap", "Users");
             }
@@ -68,12 +68,12 @@ namespace QL_RapChieuPhim.Controllers
         public ActionResult BookTickets(int showTimeId, int[] seatIds)
         {
             // Kiểm tra nếu người dùng chưa đăng nhập
-            if (Session["UserId"] == null)
+            if (Session["MaKhachHang"] == null)
             {
                 return RedirectToAction("DangNhap", "Users");
             }
 
-            var customerId = (int)Session["UserId"]; // Lấy mã khách hàng từ session
+            var customerId = (int)Session["MaKhachHang"]; // Lấy mã khách hàng từ session
 
             if (seatIds == null || seatIds.Length == 0)
             {

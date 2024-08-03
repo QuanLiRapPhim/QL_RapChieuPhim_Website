@@ -2,7 +2,7 @@
 @{
     var seats = (IEnumerable<QL_RapChieuPhim.Models.Ghe>)ViewBag.Seats;
     var showTimeId = ViewBag.ShowTimeId;
-    var customerId = Session["CustomerID"];
+    var customerId = Session["MaKhachHang"];
     ViewBag.Title = "Chọn ghế";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
@@ -51,7 +51,7 @@
                 return;
             }
 
-            const customerId = '@Session["CustomerID"]';
+            const customerId = '@Session["MaKhachHang"]';
             if (!customerId) {
                 alert('Thông tin khách hàng không hợp lệ.');
                 return;
