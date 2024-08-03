@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Rated Movies";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Rated Movies</h2>
+
+@if (ViewBag.MoviesWithRatings == null || !((IEnumerable<dynamic>)ViewBag.MoviesWithRatings).Any())
+{
+    <p>No rated movies found.</p>
+}
+else
+{
+    <div class="card-container">
+        @foreach (var movie in ViewBag.MoviesWithRatings)
+        {
+            <div class="card mb-4" style="width: 18rem;">
+                <img src="~/Images/@movie.Phim.HinhAnh" class="card-img-top" alt="@movie.Phim.TenPhim" />
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Phim.TenPhim</h5>
+                    <p class="card-text">@movie.Phim.TomTat</p>
+                    <p class="card-text"><strong>Average Rating:</strong> @movie.AverageRating.ToString("F1")</p> <!-- Format rating to 1 decimal place -->
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <a href="@Url.Action("Details", "Phims", new { id = movie.Phim.MaPhim })" class="btn btn-primary">View Details</a>
+                    <span>@movie.Phim.ThoiLuong phút</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .card {
+        flex: 1 0 calc(33.333% - 1rem); /* Adjust to show 3 cards per row with spacing */
+    }
+</style>

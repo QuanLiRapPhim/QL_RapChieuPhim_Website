@@ -23,10 +23,16 @@ namespace QL_RapChieuPhim.Controllers
         }
         public ActionResult Details(int id)
         {
-            var phim = from p in data.Phims
-                      where p.MaPhim == id
-                      select p;
-            return View(phim.Single());
+            var phim = data.Phims.SingleOrDefault(p => p.MaPhim == id);
+            if (phim == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Fetch ratings for the movie
+            var ratings = data.DanhGiaPhims.Where(dg => dg.MaPhim == id).ToList();
+            ViewBag.Ratings = ratings;
+            return View(phim);
         }
         public ActionResult LoaiPhim()
         {
@@ -38,6 +44,33 @@ namespace QL_RapChieuPhim.Controllers
         {
             var phim = from ph in data.Phims where ph.MaTheLoai == id select ph;
             return View(phim.ToList());
+        }
+        public ActionResult Search(string query)
+        {
+            var movies = from p in data.Phims
+                         where p.TenPhim.Contains(query)
+                         select p;
+
+            return View(movies.ToList());
+        }
+
+
+        // List movies with ratings
+        public ActionResult RatedMovies()
+        {
+            var moviesWithRatings = data.Phims
+                .Select(p => new
+                {
+                    Phim = p,
+                    AverageRating = data.DanhGiaPhims
+                        .Where(dg => dg.MaPhim == p.MaPhim)
+                        .Average(dg => (double?)dg.DiemDanhGia) // Ensure proper type conversion
+                })
+                .OrderByDescending(m => m.AverageRating)
+                .ToList();
+
+            ViewBag.MoviesWithRatings = moviesWithRatings;
+            return View();
         }
     }
 }

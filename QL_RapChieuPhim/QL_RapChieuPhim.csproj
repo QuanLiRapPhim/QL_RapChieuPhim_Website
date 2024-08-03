@@ -210,6 +210,8 @@
     <Content Include="Views\DatVe\ShowTimes.cshtml" />
     <Content Include="Views\DatVe\Confirmation.cshtml" />
     <Content Include="Views\Users\DoiMatKhau.cshtml" />
+    <Content Include="Views\Phims\RatedMovies.cshtml" />
+    <Content Include="Views\Phims\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

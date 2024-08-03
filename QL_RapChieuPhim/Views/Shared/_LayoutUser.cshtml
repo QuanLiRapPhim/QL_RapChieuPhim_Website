@@ -16,6 +16,10 @@
                 </a>
                 <a class="navbar-brand" href="/Phims/Index">MOVIE</a>
             </div>
+            <form class="form-inline ml-auto my-2 my-lg-0 d-flex" action="@Url.Action("Search", "Phims")" method="get">
+                <input class="form-control mr-2" type="search" name="query" placeholder="Tìm kiếm phim" aria-label="Search" style="flex: 1;">
+                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+            </form>
             <div class="auth-links">
                 @if (Session["Email"] == null)
                 {
@@ -31,6 +35,8 @@
         </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
+                
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         @Html.Action("LoaiPhim", "Phims", null)
