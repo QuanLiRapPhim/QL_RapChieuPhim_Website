@@ -124,16 +124,62 @@ namespace QL_RapChieuPhim.Controllers
             }
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
         }
-
-        public ActionResult Confirmation(int? customerId, int showTimeId)
+        [HttpPost]
+        public ActionResult CancelTickets(int[] ticketIds, int showTimeId)
         {
-            if (!customerId.HasValue)
+            // Kiểm tra nếu người dùng chưa đăng nhập
+            if (Session["MaKhachHang"] == null)
             {
-                return new HttpStatusCodeResult(400, "Thông tin khách hàng không hợp lệ.");
+                return RedirectToAction("DangNhap", "Users");
+            }
+
+            var customerId = (int)Session["MaKhachHang"]; // Lấy mã khách hàng từ session
+
+            if (ticketIds == null || ticketIds.Length == 0)
+            {
+                return new HttpStatusCodeResult(400, "Chưa chọn vé để hủy.");
+            }
+
+            var tickets = data.Ves.Where(v => ticketIds.Contains(v.MaVe) && v.MaKhachHang == customerId).ToList();
+
+            if (tickets.Count == 0)
+            {
+                return new HttpStatusCodeResult(400, "Không tìm thấy vé để hủy.");
+            }
+
+            foreach (var ticket in tickets)
+            {
+                var seat = data.Ghes.FirstOrDefault(g => g.MaGhe == ticket.MaGhe);
+                if (seat != null)
+                {
+                    seat.TrangThai = false; // Đặt trạng thái ghế về chưa đặt
+                }
+
+                data.Ves.DeleteOnSubmit(ticket);
+            }
+
+            try
+            {
+                data.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi hoặc thông báo lỗi
+                return new HttpStatusCodeResult(500, "Lỗi khi hủy vé.");
+            }
+
+            // Chuyển hướng đến trang xác nhận hủy vé với các tham số
+            return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId = showTimeId });
+        }
+        public ActionResult Confirmation(int? customerId, int? showTimeId)
+        {
+            if (!customerId.HasValue || !showTimeId.HasValue)
+            {
+                return new HttpStatusCodeResult(400, "Thông tin không hợp lệ.");
             }
 
             var tickets = data.Ves
-                .Where(v => v.MaKhachHang == customerId.Value && v.MaSuatChieu == showTimeId)
+                .Where(v => v.MaKhachHang == customerId.Value && v.MaSuatChieu == showTimeId.Value)
                 .ToList();
 
             foreach (var ticket in tickets)
@@ -144,7 +190,10 @@ namespace QL_RapChieuPhim.Controllers
                 ticket.KhachHang = data.KhachHangs.FirstOrDefault(kh => kh.MaKhachHang == ticket.MaKhachHang);
             }
 
+            ViewBag.Message = "Bạn đã hủy vé thành công.";
+            ViewBag.ShowTimeId = showTimeId.Value; // Đảm bảo showTimeId được truyền cho view
             return View(tickets);
         }
+
     }
 }

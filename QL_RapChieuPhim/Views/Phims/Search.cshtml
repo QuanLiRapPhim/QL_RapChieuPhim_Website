@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>Search Results</h2>
-
 @if (Model == null || !Model.Any())
 {
     <p>No movies found matching your search criteria.</p>
@@ -34,15 +32,3 @@ else
     }
 </div>
 }
-
-<style>
-    .card-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .card {
-        flex: 1 0 calc(33.333% - 1rem); /* Adjust to show 3 cards per row with spacing */
-    }
-</style>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Chi Tiết Phim";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
+<link rel="stylesheet" type="text/css" href="~/Content/css/cssDetails.css">
 <div class="details-page">
     <div class="img-container">
         <img src="~/Images/@Model.HinhAnh" alt="@Model.TenPhim" />
@@ -18,6 +18,14 @@
             <a href="@Url.Action("ShowTimes", "DatVe", new { id = Model.MaPhim })" class="btn btn-primary">
                 Xem Suất Chiếu
             </a>
+
+            <!-- Nút Đánh Giá chỉ hiển thị nếu người dùng đã đăng nhập -->
+            @if (Session["MaKhachHang"] != null)
+            {
+                <a href="@Url.Action("DanhGia", "Phims", new { id = Model.MaPhim })" class="btn btn-secondary">
+                    Đánh Giá
+                </a>
+            }
         </div>
     </div>
 </div>

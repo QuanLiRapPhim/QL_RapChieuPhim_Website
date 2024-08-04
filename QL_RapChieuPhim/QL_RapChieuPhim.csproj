@@ -114,6 +114,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\cssDangKy.css" />
     <Content Include="Content\css\cssDangNhap.css" />
+    <Content Include="Content\css\cssDetails.css" />
     <Content Include="Content\css\cssDoiMatKhau.css" />
     <Content Include="Content\css\cssSelectSeat.css" />
     <Content Include="Content\css\style.css" />
@@ -210,8 +211,8 @@
     <Content Include="Views\DatVe\ShowTimes.cshtml" />
     <Content Include="Views\DatVe\Confirmation.cshtml" />
     <Content Include="Views\Users\DoiMatKhau.cshtml" />
-    <Content Include="Views\Phims\RatedMovies.cshtml" />
     <Content Include="Views\Phims\Search.cshtml" />
+    <Content Include="Views\Phims\DanhGia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

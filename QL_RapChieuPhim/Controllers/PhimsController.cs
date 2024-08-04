@@ -55,22 +55,41 @@ namespace QL_RapChieuPhim.Controllers
         }
 
 
-        // List movies with ratings
-        public ActionResult RatedMovies()
+        public ActionResult DanhGia(int id)
         {
-            var moviesWithRatings = data.Phims
-                .Select(p => new
-                {
-                    Phim = p,
-                    AverageRating = data.DanhGiaPhims
-                        .Where(dg => dg.MaPhim == p.MaPhim)
-                        .Average(dg => (double?)dg.DiemDanhGia) // Ensure proper type conversion
-                })
-                .OrderByDescending(m => m.AverageRating)
-                .ToList();
+            var phim = data.Phims.SingleOrDefault(p => p.MaPhim == id);
+            if (phim == null)
+            {
+                return HttpNotFound();
+            }
 
-            ViewBag.MoviesWithRatings = moviesWithRatings;
-            return View();
+            return View(phim);
         }
+
+        [HttpPost]
+        public ActionResult DanhGia(int id, int rating, string review)
+        {
+            if (Session["MaKhachHang"] == null || !int.TryParse(Session["MaKhachHang"].ToString(), out int maKhachHang))
+            {
+                return RedirectToAction("DangNhap", "Users"); // Chuyển hướng nếu session không hợp lệ
+            }
+
+            var danhGia = new DanhGiaPhim
+            {
+                MaPhim = id,
+                DiemDanhGia = rating,
+                BinhLuan = review,
+                NgayDanhGia = DateTime.Now,
+                MaKhachHang = maKhachHang
+            };
+
+            data.DanhGiaPhims.InsertOnSubmit(danhGia);
+            data.SubmitChanges();
+
+            return RedirectToAction("Details", "Phims", new { id = id });
+        }
+
+
+
     }
 }

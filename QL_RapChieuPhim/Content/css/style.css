@@ -213,3 +213,7 @@ main {
             background-color: #0056b3;
             border-color: #004085;
         }
+/* style.css */
+.search-button {
+    margin-left: 5px; /* Điều chỉnh giá trị này nếu cần */
+}

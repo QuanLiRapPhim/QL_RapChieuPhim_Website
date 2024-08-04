@@ -1,34 +1,48 @@
 ﻿@model IEnumerable<QL_RapChieuPhim.Models.Ve>
 @{
-    ViewBag.Title = "Xác nhận đặt vé";
+    ViewBag.Title = "Xác nhận hủy vé";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>Xác nhận đặt vé</h2>
+
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Ghế</th>
-                <th>Ngày chiếu</th>
-                <th>Giá</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ticket in Model)
-            {
+    using (Html.BeginForm("CancelTickets", "DatVe", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Thêm trường ẩn cho showTimeId -->
+        <input type="hidden" name="showTimeId" value="@ViewBag.ShowTimeId" />
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@ticket.Ghe.SoGhe</td>
-                    <td>@ticket.SuatChieu.ThoiGianChieu.Value.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@ticket.SuatChieu.Gia</td>
+                    <th></th>
+                    <th>Ghế</th>
+                    <th>Ngày chiếu</th>
+                    <th>Giá</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="ticketIds" value="@ticket.MaVe" />
+                        </td>
+                        <td>@ticket.Ghe.SoGhe</td>
+                        <td>@ticket.SuatChieu.ThoiGianChieu.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@ticket.SuatChieu.Gia</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-danger">Hủy vé</button>
+    }
 }
 else
 {
-    <p>Không có vé nào được đặt.</p>
+    <p>Không có vé nào để hủy.</p>
 }
