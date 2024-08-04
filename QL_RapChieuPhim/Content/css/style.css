@@ -217,3 +217,19 @@ main {
 .search-button {
     margin-left: 5px; /* Điều chỉnh giá trị này nếu cần */
 }
+.footer {
+    background-color: #FECE68;
+    padding: 20px;
+    text-align: center;
+}
+
+    .footer a {
+        color: #000;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
