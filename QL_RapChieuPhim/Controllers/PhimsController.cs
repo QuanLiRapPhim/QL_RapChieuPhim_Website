@@ -32,8 +32,11 @@ namespace QL_RapChieuPhim.Controllers
             // Fetch ratings for the movie
             var ratings = data.DanhGiaPhims.Where(dg => dg.MaPhim == id).ToList();
             ViewBag.Ratings = ratings;
+
             return View(phim);
         }
+
+
         public ActionResult LoaiPhim()
         {
             var loaiphim = from lp in data.TheLoais select lp;
@@ -88,8 +91,5 @@ namespace QL_RapChieuPhim.Controllers
 
             return RedirectToAction("Details", "Phims", new { id = id });
         }
-
-
-
     }
 }

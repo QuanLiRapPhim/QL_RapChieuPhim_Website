@@ -10,6 +10,7 @@
 
 .details-container {
     flex: 1 1 60%;
+    padding: 20px;
 }
 
 .highlight {
@@ -23,3 +24,28 @@
 .btn-secondary {
     margin-left: 10px;
 }
+.rating-stars {
+    font-size: 24px; /* Kích thước của sao */
+}
+
+.rating-box {
+    border: 1px solid #ddd; /* Viền khung bình luận */
+    border-radius: 8px; /* Bo góc khung bình luận */
+    padding: 15px; /* Padding bên trong khung */
+    margin-bottom: 15px; /* Khoảng cách giữa các khung bình luận */
+    background-color: #f9f9f9; /* Màu nền khung bình luận */
+}
+
+.rating-user, .rating-stars, .rating-comment, .rating-date {
+    margin: 5px 0; /* Khoảng cách giữa các phần tử trong khung bình luận */
+}
+
+.star {
+    color: #e0e0e0; /* Màu xám cho các sao chưa được đánh giá */
+    display: inline-block;
+    font-size: 24px; /* Kích thước của sao */
+}
+
+    .star.filled {
+        color: #FFD700; /* Màu vàng cho các sao đã được đánh giá */
+    }
