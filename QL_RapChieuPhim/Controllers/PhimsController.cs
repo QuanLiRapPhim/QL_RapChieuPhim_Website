@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace QL_RapChieuPhim.Controllers
@@ -29,9 +28,22 @@ namespace QL_RapChieuPhim.Controllers
                 return HttpNotFound();
             }
 
-            // Fetch ratings for the movie
+            var phimInfos = data.Phims.Select(p => new PhimInfo
+            {
+                MaPhim = p.MaPhim,
+                TenPhim = p.TenPhim,
+                TheLoai = p.TheLoai.TenTheLoai,
+                DaoDien = p.DaoDien,
+                HinhAnh=p.HinhAnh
+            }).ToList();
+
+            var danhGiaPhims = data.DanhGiaPhims.ToList();
             var ratings = data.DanhGiaPhims.Where(dg => dg.MaPhim == id).ToList();
             ViewBag.Ratings = ratings;
+            var collaborativeFiltering = new CollaborativeFiltering(phimInfos, danhGiaPhims);
+            var recommendedPhims = collaborativeFiltering.Recommend(id);
+
+            ViewBag.RecommendedPhims = recommendedPhims;
 
             return View(phim);
         }

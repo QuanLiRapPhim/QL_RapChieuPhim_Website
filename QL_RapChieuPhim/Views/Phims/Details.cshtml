@@ -15,12 +15,10 @@
         <p>Thời lượng: <span class="highlight">@Model.ThoiLuong phút</span></p>
         <p><span class="bold">Tóm tắt: </span>@Model.TomTat</p>
         <div id="DatVe">
-            <!-- Liên kết đến hành động ShowTimes với tham số MaPhim -->
             <a href="@Url.Action("ShowTimes", "DatVe", new { id = Model.MaPhim })" class="btn btn-primary">
                 Xem Suất Chiếu
             </a>
 
-            <!-- Nút Đánh Giá chỉ hiển thị nếu người dùng đã đăng nhập -->
             @if (Session["MaKhachHang"] != null)
             {
                 <a href="@Url.Action("DanhGia", "Phims", new { id = Model.MaPhim })" class="btn btn-secondary">
@@ -50,4 +48,20 @@
             </div>
         }
     </div>
+</div>
+
+<h4>Phim được đề xuất</h4>
+<div class="recommended-movies">
+    @foreach (var phim in ViewBag.RecommendedPhims)
+    {
+        <div class="card">
+            <a href="@Url.Action("Details", "Phims", new { id = phim.MaPhim })">
+                <img src="~/Images/@phim.HinhAnh" alt="@phim.TenPhim" class="card-img" />
+                <div class="card-body">
+                    <h5 class="card-title">@phim.TenPhim</h5>
+
+                </div>
+            </a>
+        </div>
+    }
 </div>
