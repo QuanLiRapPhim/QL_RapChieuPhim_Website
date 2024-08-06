@@ -54,7 +54,7 @@
 |  1  |  Đăng nhập/đăng xuất |     |
 |  2  | Phân quyền  |   |
 |  3  |  Quản lý nhân viên +  chức vụ  |     |
-|  4  |  Quản lý phim + thể loại phim + rạp phim|     |
+|  4  |  Quản lý phim + thể loại phim + lịch chiếu phim|     |
 |  5  |  Quản lý khách hàng |    |
 |  6  |   Thống kê |    |
 |  7  |   Báo cáo |    |
