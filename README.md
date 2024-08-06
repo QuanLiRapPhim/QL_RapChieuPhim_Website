@@ -21,7 +21,7 @@
 
 <p>Người dùng có thể truy cập vào hệ thống thông qua website để xem lịch chiếu phim và đặt vé một cách thuận tiện. Hệ thống cũng cung cấp tính năng quản lý tài khoản người dùng, cho phép họ lưu trữ thông tin cá nhân và theo dõi lịch sử giao dịch. </p>
 
-<p>Ngoài ra, hệ thống đi kèm với giao diện quản lý cho nhân viên và quản lý rạp chiếu phim. Quản lý có thể thực hiện quản lý lịch làm việc nhân viên, quản lý kho lưu trữ phim, và theo dõi doanh thu từng suất chiếu,... Các tính năng thông minh như hệ thống báo cáo và thống kê giúp quản lý đưa ra các quyết định dựa trên dữ liệu số chính xác.</p>
+<p>Ngoài ra, hệ thống đi kèm với giao diện quản lý cho nhân viên và quản lý rạp chiếu phim. Quản lý có thể thực hiện quản lý lịch làm việc nhân viên, quản lý kho lưu trữ phim,... Các tính năng thông minh như hệ thống báo cáo và thống kê giúp quản lý đưa ra các quyết định dựa trên dữ liệu số chính xác.</p>
 
 <p>Hệ thống này mang lại sự tiện lợi và hiệu quả trong vận hành rạp chiếu phim, từ việc quản lý lịch chiếu, bán vé đến quản lý nhân viên và tài liệu quản lý, từ đó nâng cao trải nghiệm của khách hàng và tối ưu hóa hoạt động của rạp chiếu phim một cách toàn diện.
 </p>
@@ -54,7 +54,7 @@
 |  1  |  Đăng nhập/đăng xuất |     |
 |  2  | Phân quyền  |   |
 |  3  |  Quản lý nhân viên +  chức vụ  |     |
-|  4  |  Quản lý phim + đạo diễn + nhà sản xuất + AI|     |
+|  4  |  Quản lý phim + thể loại phim + lịch chiếu phim|     |
 |  5  |  Quản lý khách hàng |    |
 |  6  |   Thống kê |    |
 |  7  |   Báo cáo |    |
@@ -93,14 +93,19 @@
 #### APP
 
 <p>
-Quản lý phim, thể loại và nhà xuất bản
+Quản lý phim, thể loại
 </p>
 <ul>
 <li>Thêm và cập nhật phim, thể loại</li>
 <li>Tra cứu thông tin phim, thể loại</li>
 </ul>
-
 <p>
+Quản lí phim được chiếu
+<p>
+<ul>
+<li>Thêm và cập nhật phim chiếu</li>
+<li>Tra cứu thông tin phim chiếu</li>	
+</ul>
 Quản lý khách hàng
 </p>
 <ul>
@@ -119,12 +124,8 @@ Quản lý nhân viên và chức vụ
 Báo cáo
 </p>
 <ul>
-<li> Phim được xem nhiều nhất trong tháng </li>
-<li> Phim đuợc Thêm vào yêu thích nhiều nhất</li></li>
+<li> Khách hàng từng xem phim </li>
 </ul>
-<p>
-Thống kê</p>
-<ul>
-<li> Doanh thu theo ngày theo tháng, theo năm</li></li>
-</ul>
+
+
 
