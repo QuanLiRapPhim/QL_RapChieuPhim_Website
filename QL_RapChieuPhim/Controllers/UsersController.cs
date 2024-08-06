@@ -86,8 +86,8 @@ namespace QL_RapChieuPhim.Controllers
             KhachHang kh = data.KhachHangs.SingleOrDefault(n => n.Email == email && n.MatKhau == matkhau);
             if (kh != null)
             {
-                Session["MaKhachHang"] = kh.MaKhachHang; // Đặt mã khách hàng vào session
-                Session["Email"] = kh.Email; // Lưu email vào session
+                Session["MaKhachHang"] = kh.MaKhachHang;
+                Session["Email"] = kh.Email; 
                 return RedirectToAction("Index", "Phims");
             }
             else
@@ -152,7 +152,6 @@ namespace QL_RapChieuPhim.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Ghi nhật ký lỗi
                     ViewBag.ThongBao = "Có lỗi xảy ra trong quá trình đổi mật khẩu. Vui lòng thử lại.";
                 }
             }

@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<QL_RapChieuPhim.Models.Ve>
+
 @{
     ViewBag.Title = "Xác nhận hủy vé";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-
-
-@if (Model.Any())
+@if (Model.Count() > 0)
 {
     using (Html.BeginForm("CancelTickets", "DatVe", FormMethod.Post))
     {

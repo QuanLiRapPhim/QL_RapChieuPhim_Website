@@ -86,7 +86,7 @@ namespace QL_RapChieuPhim.Controllers
         {
             if (Session["MaKhachHang"] == null || !int.TryParse(Session["MaKhachHang"].ToString(), out int maKhachHang))
             {
-                return RedirectToAction("DangNhap", "Users"); // Chuyển hướng nếu session không hợp lệ
+                return RedirectToAction("DangNhap", "Users"); 
             }
 
             var danhGia = new DanhGiaPhim

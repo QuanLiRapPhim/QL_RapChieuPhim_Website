@@ -58,20 +58,20 @@
 }
 
 .card {
-    width: 150px; /* giảm chiều rộng của card */
-    margin: 10px; /* thêm khoảng cách giữa các card */
+    width: 150px;
+    margin: 10px;
 }
 
     .card img {
         width: 100%;
-        height: 200px; /* giảm chiều cao của ảnh */
-        object-fit: cover; /* đảm bảo ảnh được cắt để vừa với kích thước */
+        height: 200px;
+        object-fit: cover;
     }
 
 .card-body {
-    padding: 5px; /* giảm padding của card-body */
+    padding: 5px;
 }
 
 .card-title {
-    font-size: 14px; /* giảm kích thước font của tiêu đề */
+    font-size: 14px;
 }

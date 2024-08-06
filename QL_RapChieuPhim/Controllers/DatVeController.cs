@@ -22,7 +22,6 @@ namespace QL_RapChieuPhim.Controllers
             return View(movies);
         }
 
-        // Hiển thị danh sách suất chiếu của phim theo ID
         public ActionResult ShowTimes(int id)
         {
             var showTimes = data.SuatChieus.Where(sc => sc.MaPhim == id).ToList();
@@ -34,10 +33,8 @@ namespace QL_RapChieuPhim.Controllers
             return View(showTimes);
         }
 
-        // Chọn ghế cho suất chiếu
         public ActionResult SelectSeats(int id)
         {
-            // Kiểm tra nếu người dùng chưa đăng nhập
             if (Session["MaKhachHang"] == null)
             {
                 return RedirectToAction("DangNhap", "Users");
@@ -57,23 +54,21 @@ namespace QL_RapChieuPhim.Controllers
             {
                 seats = data.Ghes.Where(g => g.MaManHinh == manHinhId.Value).ToList();
             }
-            ViewBag.Seats = seats; // Truyền danh sách ghế qua ViewBag
-            ViewBag.ShowTimeId = id; // Truyền ID suất chiếu qua ViewBag
+            ViewBag.Seats = seats; 
+            ViewBag.ShowTimeId = id;
 
-            return View(showTime); // Trả về suất chiếu
+            return View(showTime);
         }
 
-        // Đặt vé cho suất chiếu và ghế
         [HttpPost]
         public ActionResult BookTickets(int showTimeId, int[] seatIds)
         {
-            // Kiểm tra nếu người dùng chưa đăng nhập
             if (Session["MaKhachHang"] == null)
             {
                 return RedirectToAction("DangNhap", "Users");
             }
 
-            var customerId = (int)Session["MaKhachHang"]; // Lấy mã khách hàng từ session
+            var customerId = (int)Session["MaKhachHang"];
 
             if (seatIds == null || seatIds.Length == 0)
             {
@@ -106,7 +101,7 @@ namespace QL_RapChieuPhim.Controllers
                     MaKhachHang = customerId,
                     MaGhe = seat.MaGhe,
                     SoGhe = seat.SoGhe,
-                    Gia = showTime.Gia, // Đảm bảo giá từ SuatChieu được sử dụng
+                    Gia = showTime.Gia,
                     NgayDatVe = DateTime.Now
                 };
 
@@ -119,7 +114,6 @@ namespace QL_RapChieuPhim.Controllers
             }
             catch (Exception ex)
             {
-                // Log lỗi hoặc thông báo lỗi
                 return new HttpStatusCodeResult(500, "Lỗi khi đặt vé.");
             }
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId });
@@ -127,13 +121,12 @@ namespace QL_RapChieuPhim.Controllers
         [HttpPost]
         public ActionResult CancelTickets(int[] ticketIds, int showTimeId)
         {
-            // Kiểm tra nếu người dùng chưa đăng nhập
             if (Session["MaKhachHang"] == null)
             {
                 return RedirectToAction("DangNhap", "Users");
             }
 
-            var customerId = (int)Session["MaKhachHang"]; // Lấy mã khách hàng từ session
+            var customerId = (int)Session["MaKhachHang"];
 
             if (ticketIds == null || ticketIds.Length == 0)
             {
@@ -152,7 +145,7 @@ namespace QL_RapChieuPhim.Controllers
                 var seat = data.Ghes.FirstOrDefault(g => g.MaGhe == ticket.MaGhe);
                 if (seat != null)
                 {
-                    seat.TrangThai = false; // Đặt trạng thái ghế về chưa đặt
+                    seat.TrangThai = false;
                 }
 
                 data.Ves.DeleteOnSubmit(ticket);
@@ -164,11 +157,9 @@ namespace QL_RapChieuPhim.Controllers
             }
             catch (Exception ex)
             {
-                // Log lỗi hoặc thông báo lỗi
                 return new HttpStatusCodeResult(500, "Lỗi khi hủy vé.");
             }
 
-            // Chuyển hướng đến trang xác nhận hủy vé với các tham số
             return RedirectToAction("Confirmation", new { customerId = customerId, showTimeId = showTimeId });
         }
         public ActionResult Confirmation(int? customerId, int? showTimeId)
@@ -191,7 +182,7 @@ namespace QL_RapChieuPhim.Controllers
             }
 
             ViewBag.Message = "Bạn đã hủy vé thành công.";
-            ViewBag.ShowTimeId = showTimeId.Value; // Đảm bảo showTimeId được truyền cho view
+            ViewBag.ShowTimeId = showTimeId.Value;
             return View(tickets);
         }
 
